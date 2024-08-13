@@ -1,0 +1,21 @@
+Type;Name;Surveillance;Retrieval;Speed;Range;Favor
+Pressure Hull;Modified Shark-class Pressure Hull;-5;40;25;45;35
+Pressure Hull;Modified Unkiu-class Pressure Hull;20;15;5;65;25
+Pressure Hull;Modified Whale-class Pressure Hull;-10;55;40;20;30
+Pressure Hull;Modified Coelacanth-class Pressure Hull;40;-5;30;40;30
+Pressure Hull;Modified Syldra-class Pressure Hull;10;80;30;-15;10
+Stern;Modified Shark-class Stern;-25;25;70;35;25
+Stern;Modified Unkiu-class Stern;20;5;35;45;35
+Stern;Modified Whale-class Stern;20;20;5;60;20
+Stern;Modified Coelacanth-class Stern;10;25;40;30;30
+Stern;Modified Syldra-class Stern;20;60;35;-10;10
+Bow;Modified Shark-class Bow;55;50;15;-15;25
+Bow;Modified Unkiu-class Bow;65;25;25;-10;20
+Bow;Modified Whale-class Bow;25;65;-10;25;25
+Bow;Modified Coelacanth-class Bow;70;15;-10;30;5
+Bow;Modified Syldra-class Bow;45;30;-10;40;40
+Bridge;Modified Shark-class Bridge;25;25;30;25;35
+Bridge;Modified Unkiu-class Bridge;30;10;30;35;40
+Bridge;Modified Whale-class Bridge;0;30;25;50;45
+Bridge;Modified Coelacanth-class Bridge;60;20;35;-10;55
+Bridge;Modified Syldra-class Bridge;60;20;-5;30;60
