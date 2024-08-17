@@ -1,4 +1,4 @@
-num_characters = 200
+num_characters = 400
 max_arrow_keys = 25
 
 channel = "party" # fc, party, echo, say
@@ -45,4 +45,4 @@ for i in range(num_characters):
     else: 
         sound_effect = random.randint(1, 16)
         pyautogui.typewrite(f"<se.{sound_effect}>")
-        sound_effect = True
+        # sound_effect = True
