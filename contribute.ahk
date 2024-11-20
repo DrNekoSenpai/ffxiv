@@ -10,3 +10,7 @@ sleep 50
 Send, {Numpad0}
 sleep 750
 return
+
+NumpadDiv::
+ExitApp
+return

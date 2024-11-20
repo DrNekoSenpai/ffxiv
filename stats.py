@@ -23,7 +23,7 @@ argparser.add_argument("--range", type=int, help="Desired range stat.")
 argparser.add_argument("--favor", type=int, help="Desired favor stat.")
 argparser.add_argument("--min-level", type=int, help="Minimum level to consider.")
 argparser.add_argument("--max", type=int, help="Maximum number of builds to display.")
-argparser.add_argument("--output_type", type=str, default="full", help="Output type: minimal, full.")
+argparser.add_argument("--output_type", "-o", type=str, default="full", help="Output type: minimal, one-line, full.")
 args = argparser.parse_args()
 
 if args.surveillance is None: 
@@ -57,7 +57,7 @@ if args.min_level is None:
     else: args.min_level = int(args.min_level)
 
 if args.max is None: 
-    if args.output_type == "minimal": args.max = 15
+    if args.output_type == "minimal" or args.output_type == "one-line": args.max = 15
     else: args.max = 3
 
 print("")
@@ -138,7 +138,20 @@ valid_combinations = sorted(valid_combinations, key=lambda x: (int(x[1]), -int(x
 
 if args.output_type == "minimal":
     for combination in valid_combinations:
-        print(combination)
+        print(f"{''.join(combination[0])} - Level {combination[1]}; {combination[2]}, {combination[3]}, {combination[4]}, {combination[5]}, {combination[6]}")
+
+elif args.output_type == "one-line": 
+    for combination in valid_combinations:
+        part_list = []
+        for part in combination[0]:
+            if part == "S": part_list.append("Shark")
+            elif part == "U": part_list.append("Unkiu")
+            elif part == "W": part_list.append("Whale")
+            elif part == "C": part_list.append("Coelacanth")
+            elif part == "Y": part_list.append("Syldra")
+
+        print(f"{', '.join(part_list)} - Level {combination[1]}; Surveillance: {combination[2]}, Retrieval: {combination[3]}, Speed: {combination[4]}, Range: {combination[5]}, Favor: {combination[6]}")
+    
 
 elif args.output_type == "full":
     for combination in valid_combinations:
@@ -167,6 +180,8 @@ elif args.output_type == "full":
         elif abbreviation[3] == "W": print("- Bridge: Whale")
         elif abbreviation[3] == "C": print("- Bridge: Coelacanth")
         elif abbreviation[3] == "Y": print("- Bridge: Syldra")
+
+        print("")
 
         print(f"Level: {combination[1]}")
         print(f"Surveillance: {combination[2]}")

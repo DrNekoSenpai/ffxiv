@@ -5,16 +5,12 @@ parser.add_argument('-s', '--slot', type=int, help='Macro slot to run (1-12)', r
 parser.add_argument('-n', '--numLoops', type=int, help='Number of times to run the macro', required=False)
 parser.add_argument('-t', '--sleepTime', type=int, help='Time to sleep between macro runs', nargs='+', required=False)
 parser.add_argument('--delay', type=int, help='Number of seconds to delay crafting start by', default=0, required=False)
-parser.add_argument("--sync", action="store_true", help="Sync button", required=False)
+parser.add_argument('--food', type=int, help='Remaining duration of food buff', default=0, required=False)
 args = parser.parse_args()
 
 # If the user didn't specify a slot, ask them for one.
 if args.slot is None:
-    args.slot = int(input('Macro slot to run (1-12): '))
-
-# If the user didn't specify a number of loops, ask them for one.
-if args.numLoops is None:
-    args.numLoops = int(input('Number of times to run the macro: '))
+    args.slot = int(input('Macro slot to run (1-10): '))
 
 # If the user didn't specify a sleep time, ask them for one.
 if args.sleepTime is None:
@@ -24,8 +20,30 @@ if args.sleepTime is None:
     else:
         args.sleepTime = [int(args.sleepTime)]
 
+# If the user didn't specify a number of loops, ask them for one.
+if args.numLoops is None:
+    # Maximum loops in 30 minutes is equal to 1800 / (sleepTime + 6)
+    # Maximum loops in 60 minutes is equal to 3600 / (sleepTime + 6)
+
+    # If food buff was not given, show 30 min and 60 min timers
+    if args.food == 0:
+        loops_30 = 1800 // (sum(args.sleepTime) + 6)
+        loops_60 = 3600 // (sum(args.sleepTime) + 6)
+
+        print(f'Maximum loops in 30 minutes: {loops_30}')
+        print(f'Maximum loops in 60 minutes: {loops_60}')
+
+    else: 
+        loops = args.food * 60 // (sum(args.sleepTime) + 6)
+        print(f'Maximum loops in {args.food} minutes: {loops}')
+
+    args.numLoops = int(input('Number of times to run the macro: '))
+
 if len(args.sleepTime) > 1:
     args.sleepTime = [int(x) for x in args.sleepTime]
+
+else: 
+    args.sleepTime = int(args.sleepTime[0])
 
 slot = args.slot
 numLoops = args.numLoops
@@ -34,12 +52,12 @@ sleepTime = args.sleepTime
 print('')
 
 # Define the coordinates for the buttons we're going to click.
-button_size = 90
+button_size = 80
 
-macro_coords = (960 + (slot - 1) * button_size, 1170)
-double_coords = (960 + slot * button_size, 1170)
+macro_coords = (900 + (slot - 1) % 2 * button_size, 1310 - (slot - 1) // 2 * button_size)
+double_coords = (macro_coords[0] + button_size, macro_coords[1]) if slot % 2 != 0 else None
+
 synthesize_coords = (1080, 825)
-sync_button = (1480, 1265)
 
 if numLoops != 1: 
     if isinstance(sleepTime, int):
@@ -59,14 +77,6 @@ else:
 if args.delay > 0:
     print(f'Delaying macro start by {args.delay} seconds...')
     time.sleep(args.delay)
-
-# Hit the sync button
-if args.sync:
-    pyautogui.moveTo(sync_button)
-    pyautogui.mouseDown(button='left')
-    time.sleep(0.25)
-    pyautogui.mouseUp(button='left')
-    time.sleep(1)
 
 if isinstance(sleepTime, int):
     # We loop through the number of times the user specified.
